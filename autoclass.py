@@ -30,6 +30,7 @@ def auto_class():
         noClassLeft = False
         if currentTime < first_start:
             sleep_time = (first_start - currentTime).total_seconds()
+            print(f"First class in {sleep_time} seconds")
             sleep(sleep_time)
             continue
         if currentTime > last_end:
@@ -51,11 +52,7 @@ def auto_class():
             if currentTime < start_time:
                 sleep_time = (start_time - currentTime).total_seconds()
                 print(f'Class not starting for {sleep_time} seconds')
-                m = sleep_time
-                while m>0:
-                    sleep(10)
-                    print(f"Next class in {m-10} seconds")
-                    m -= 10
+                sleep(sleep_time)
             elif currentTime >= start_time:
                 link = st[index].split()[-1]
                 runtime = (end_time - currentTime).total_seconds()

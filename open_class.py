@@ -8,7 +8,7 @@ def open_class(link, runtime):
         open_chrome = False
     else:
         open_chrome = True
-    print(open_chrome)
+    # print(open_chrome)
     if open_chrome:
         kb.send('win+1')
         sleep(7)
