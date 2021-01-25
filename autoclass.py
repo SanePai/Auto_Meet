@@ -53,6 +53,8 @@ def auto_class():
                 sleep_time = (start_time - currentTime)
                 while sleep_time.total_seconds():
                     print(f'Class not starting for {sleep_time}')
+                    if sleep_time.total_seconds() <= 600:
+                        sleep(sleep_time.total_seconds())
                     sleep(600)
                     sleep_time -= datetime.timedelta(minutes=10)
             elif currentTime >= start_time:
