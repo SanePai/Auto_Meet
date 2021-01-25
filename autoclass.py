@@ -50,9 +50,10 @@ def auto_class():
             start_time = datetime.datetime.fromisoformat(start_time)
             end_time = datetime.datetime.fromisoformat(end_time)
             if currentTime < start_time:
-                sleep_time = (start_time - currentTime).total_seconds()
-                print(f'Class not starting for {sleep_time} seconds')
-                sleep(sleep_time)
+                sleep_time = (start_time - currentTime)
+                while sleep_time.total_seconds():
+                    print(f'Class not starting for {sleep_time}')
+                sleep(sleep_time.total_seconds())
             elif currentTime >= start_time:
                 link = st[index].split()[-1]
                 runtime = (end_time - currentTime).total_seconds()
