@@ -53,7 +53,7 @@ def auto_class():
                 sleep_time = (start_time - currentTime)
                 while sleep_time.total_seconds():
                     print(f'Class not starting for {sleep_time}')
-                sleep(sleep_time.total_seconds())
+                    sleep(sleep_time.total_seconds())
             elif currentTime >= start_time:
                 link = st[index].split()[-1]
                 runtime = (end_time - currentTime).total_seconds()
