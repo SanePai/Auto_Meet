@@ -20,16 +20,10 @@ def open_class(link, runtime):
     try:
         pg.locateOnScreen('join_now_button.png')
     except ImageNotFoundException:
-        sleep(5)
+        sleep(7)
     pg.click('join_now_button.png')
-    # sleep(1)
     # record(f"Test_Lab_Recording {runtime}.avi")
-    sleep(runtime)
-    # m = runtime
-    # while m>0:
-    #     print(f'{m} left')
-    #     sleep(10)
-    #     m = m - 10
+    sleep(runtime - 540)
     try:
         pg.click("end_class.png")
         sleep(1)
