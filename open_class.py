@@ -3,7 +3,11 @@ from time import sleep
 import pyautogui as pg
 from pyautogui import ImageNotFoundException
 
-def open_class(link, runtime):
+def open_class(link, runtime, end_time_correction = 540):
+    if end_time_correction>runtime:
+        print(f'Sleeping for {runtime}')
+        sleep(runtime)
+        return 0 
     if pg.locateOnScreen("chrome_close.png"):
         open_chrome = False
     else:
@@ -18,17 +22,20 @@ def open_class(link, runtime):
     kb.send('enter')
     sleep(5)
     try:
-        pg.locateOnScreen('join_now_button.png')
-    except ImageNotFoundException:
-        sleep(7)
-    pg.click('join_now_button.png')
+        pg.click('join_now_button.png')
+    except TypeError:
+        sleep(5)
+        pg.click('join_now_button.png')
+    except:
+        sleep(2)
+        pg.click('join_now_button.png')
     # record(f"Test_Lab_Recording {runtime}.avi")
-    sleep(runtime - 540)
+    sleep(runtime - end_time_correction)
     try:
         pg.click("end_class.png")
         sleep(1)
         kb.send('ctrl+w')
-    except ImageNotFoundException:
+    except TypeError:
         kb.send('win+1')
         sleep(2)
         count = 0
@@ -40,9 +47,7 @@ def open_class(link, runtime):
                 pg.click('end_class.png')
                 sleep(1)
                 kb.send('ctrl+w')
-            except ImageNotFoundException:
+            except TypeError:
                 kb.send('ctrl+tab')
                 count += 1
-
-if __name__ == "__main__":
-    open_class()
+    sleep(end_time_correction)
