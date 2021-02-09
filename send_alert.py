@@ -1,7 +1,7 @@
 import os
 from time import sleep
 from notify_run import Notify
-def send_alert(joined_class=None, exit_class=None, link=None):
+def send_alert(joined_class=None, exit_class=None, link=None, custom_msg = None):
     notify = Notify()
     if joined_class:
         msg = "Joined class succesfully"
@@ -9,15 +9,11 @@ def send_alert(joined_class=None, exit_class=None, link=None):
     if exit_class:
         msg = "Exited class succesfully"
         notify.send(msg)
-    if not joined_class:
+    if joined_class is False:
         msg = "Failed to join class"
         notify.send(msg, link)
-    if not exit_class:
+    if exit_class is False:
         msg = "Failed to exit class"
         notify.send(msg)
-
-        msg = "Failed to join or exit class!"
-        os.system(f"notify-run send \"{msg}\"", link)
-send_alert(True)
-sleep(5)
-send_alert(False)
+    if custom_msg:
+        notify.send(custom_msg)

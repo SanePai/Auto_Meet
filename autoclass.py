@@ -3,6 +3,7 @@ from time import sleep
 import datetime
 import os
 from open_class import open_class
+from send_alert import send_alert
 
 def print_details(event):
     class_name = ""
@@ -69,6 +70,7 @@ def auto_class():
                     sleep(runtime)
             else:
                 print("Unknown Error")
+                send_alert(custom_msg="Some unknown error has occured")
             if noClassLeft: break
     if noClassLeft:
         print(noClassLeft)
