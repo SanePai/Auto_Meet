@@ -6,6 +6,7 @@ def main():
     noClassLeft = auto_class()
     print(noClassLeft)
     if noClassLeft:
+        now = datetime.datetime.now()
         tom = datetime.datetime(now.year, now.month, now.day+1, 8, 00, 00)
         print("Done for today")
         print(f'Sleeping for {(tom - now)}')

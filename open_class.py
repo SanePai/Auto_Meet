@@ -3,7 +3,7 @@ from time import sleep
 import pyautogui as pg
 from pyautogui import ImageNotFoundException
 
-def open_class(link, runtime, end_time_correction = 540):
+def open_class(link, runtime, end_time_correction = 0):
     if end_time_correction>runtime:
         print(f'Sleeping for {runtime}')
         sleep(runtime)
