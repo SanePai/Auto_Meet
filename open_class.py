@@ -4,7 +4,7 @@ import pyautogui as pg
 from pyautogui import ImageNotFoundException
 from send_alert import send_alert
 
-def open_class(link, runtime, end_time_correction = 0):
+def open_class(link, runtime, class_name, end_time_correction = 0):
     if end_time_correction>runtime:
         print(f'Sleeping for {runtime}')
         sleep(runtime)
@@ -21,23 +21,24 @@ def open_class(link, runtime, end_time_correction = 0):
     sleep(1)
     kb.write(link)
     kb.send('enter')
-    sleep(5)
+    sleep(6)
     try:
         pg.click('join_now_button.png')
-        send_alert(joined_class=True)
+        send_alert(joined_class=True, class_name=class_name)
     except TypeError:
-        sleep(6)
-        pg.click('join_now_button.png')
-        send_alert(joined_class=True)
-    except:
-        send_alert(joined_class=False, link = link)
+        try:
+            sleep(6)
+            pg.click('join_now_button.png')
+            send_alert(joined_class=True, class_name=class_name)
+        except:
+            send_alert(joined_class=False, link = link, class_name= class_name)
     # record(f"Test_Lab_Recording {runtime}.avi")
     sleep(runtime - end_time_correction)
     try:
         pg.click("end_class.png")
         sleep(1)
         kb.send('ctrl+w')
-        send_alert(exit_class=True)
+        send_alert(exit_class=True, class_name= class_name)
     except TypeError:
         kb.send('win+1')
         sleep(2)
@@ -45,13 +46,14 @@ def open_class(link, runtime, end_time_correction = 0):
         while True:
             if count == 10:
                 print("Couldnt find the end button")
-                send_alert(exit_class=False)
+                send_alert(exit_class=False, class_name=class_name)
                 break
             try: 
                 pg.click('end_class.png')
                 sleep(1)
                 kb.send('ctrl+w')
-                send_alert(exit_class=True)
+                send_alert(exit_class=True, class_name= class_name)
+                break
             except TypeError:
                 kb.send('ctrl+tab')
                 count += 1

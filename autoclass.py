@@ -63,8 +63,9 @@ def auto_class():
                 link = st[index].split()[-1]
                 runtime = (end_time - currentTime).total_seconds()
                 if ".com" in link:
-                    print_details(st[index].split())    
-                    open_class(link, runtime)
+                    print_details(st[index].split())
+                    class_name = st[index].split()[2:-2]  
+                    open_class(link, runtime,class_name)
                 else:
                     print("No meet link available for this event")
                     sleep(runtime)
