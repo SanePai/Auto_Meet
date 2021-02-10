@@ -2,6 +2,7 @@ import keyboard as kb
 from time import sleep
 import pyautogui as pg
 from pyautogui import ImageNotFoundException
+from send_alert import send_alert
 
 def open_class(link, runtime, end_time_correction = 0):
     if end_time_correction>runtime:
@@ -23,30 +24,34 @@ def open_class(link, runtime, end_time_correction = 0):
     sleep(5)
     try:
         pg.click('join_now_button.png')
+        send_alert(joined_class=True)
     except TypeError:
-        sleep(5)
+        sleep(6)
         pg.click('join_now_button.png')
+        send_alert(joined_class=True)
     except:
-        sleep(2)
-        pg.click('join_now_button.png')
+        send_alert(joined_class=False, link = link)
     # record(f"Test_Lab_Recording {runtime}.avi")
     sleep(runtime - end_time_correction)
     try:
         pg.click("end_class.png")
         sleep(1)
         kb.send('ctrl+w')
+        send_alert(exit_class=True)
     except TypeError:
         kb.send('win+1')
         sleep(2)
         count = 0
         while True:
-            if count == 6:
+            if count == 10:
                 print("Couldnt find the end button")
+                send_alert(exit_class=False)
                 break
             try: 
                 pg.click('end_class.png')
                 sleep(1)
                 kb.send('ctrl+w')
+                send_alert(exit_class=True)
             except TypeError:
                 kb.send('ctrl+tab')
                 count += 1
