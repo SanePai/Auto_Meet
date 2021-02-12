@@ -9,7 +9,7 @@ def open_class(link, runtime, class_name, end_time_correction = 0):
         print(f'Sleeping for {runtime}')
         sleep(runtime)
         return 0 
-    if pg.locateOnScreen("chrome_close.png"):
+    if pg.locateOnScreen("img/chrome_close.png"):
         open_chrome = False
     else:
         open_chrome = True
@@ -23,19 +23,19 @@ def open_class(link, runtime, class_name, end_time_correction = 0):
     kb.send('enter')
     sleep(6)
     try:
-        pg.click('join_now_button.png')
+        pg.click('img/join_now_button.png')
         send_alert(joined_class=True, class_name=class_name)
     except TypeError:
         try:
             sleep(6)
-            pg.click('join_now_button.png')
+            pg.click('img/join_now_button.png')
             send_alert(joined_class=True, class_name=class_name)
         except:
             send_alert(joined_class=False, link = link, class_name= class_name)
     # record(f"Test_Lab_Recording {runtime}.avi")
     sleep(runtime - end_time_correction)
     try:
-        pg.click("end_class.png")
+        pg.click("img/end_class.png")
         sleep(1)
         kb.send('ctrl+w')
         send_alert(exit_class=True, class_name= class_name)
@@ -49,7 +49,7 @@ def open_class(link, runtime, class_name, end_time_correction = 0):
                 send_alert(exit_class=False, class_name=class_name)
                 break
             try: 
-                pg.click('end_class.png')
+                pg.click('img/end_class.png')
                 sleep(1)
                 kb.send('ctrl+w')
                 send_alert(exit_class=True, class_name= class_name)
