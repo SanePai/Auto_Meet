@@ -5,14 +5,19 @@ from send_alert import send_alert
 def main():
     now = datetime.datetime.now()
     noClassLeft = auto_class()
-    # print(noClassLeft)
     if noClassLeft:
         now = datetime.datetime.now()
         tom = datetime.datetime(now.year, now.month, now.day+1, 8, 00, 00)
         print("Done for today")
         send_alert(custom_msg="Done for today\nSleeping till tomorrow")
         print(f'Sleeping for {(tom - now)}')
-        sleep((tom - now).total_seconds())
+        m = (tom-now).total_seconds()
+        while m:
+            if m<600:
+                sleep(m)
+                break
+            sleep(600)
+            m = (tom - datetime.datetime.now()).total_seconds()
 
 if __name__ == "__main__":
     main()

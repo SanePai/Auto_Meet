@@ -10,7 +10,11 @@ def print_details(event):
     for i in range(2,len(event)-1):
         class_name += event[i]
         class_name += " "
-    print(f"Class: {class_name}\n{event[0]} to {event[1]}")
+    start = datetime.datetime.fromisoformat(event[0])
+    end = datetime.datetime.fromisoformat(event[1])
+    print(f"Class: {class_name}\n{start} to {end}")
+    return class_name
+        
 
 def auto_class():
     while True:
@@ -32,7 +36,14 @@ def auto_class():
         if currentTime < first_start:
             sleep_time = (first_start - currentTime).total_seconds()
             print(f"First class in {sleep_time} seconds")
-            sleep(sleep_time)
+            m = sleep_time
+            while m:
+                if m<600:
+                    sleep(m)
+                    break
+                sleep(600)
+                m = (first_start - datetime.datetime.now()).total_seconds()
+                print(f'First class in {first_start - datetime.datetime.now()}')
             continue
         if currentTime > last_end:
             noClassLeft = True
@@ -58,13 +69,12 @@ def auto_class():
                         sleep(sleep_time.total_seconds())
                         break
                     sleep(600)
-                    sleep_time -= datetime.timedelta(minutes=10)
+                    sleep_time = (start_time - datetime.datetime.now())
             elif currentTime >= start_time:
                 link = st[index].split()[-1]
                 runtime = (end_time - currentTime).total_seconds()
                 if ".com" in link:
-                    print_details(st[index].split())
-                    class_name = st[index].split()[2:-2]  
+                    class_name = print_details(st[index].split())
                     open_class(link, runtime,class_name)
                 else:
                     print("No meet link available for this event")
@@ -74,7 +84,6 @@ def auto_class():
                 send_alert(custom_msg="Some unknown error has occured")
             if noClassLeft: break
     if noClassLeft:
-        print(noClassLeft)
         return noClassLeft
 
 if __name__ == "__main__":
