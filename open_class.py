@@ -28,6 +28,7 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6969,
             print("Connected")
         else:
             print("unknown error")
+    driver.minimize_window()
     driver.get(link)
     sleep(7)
     mic_off = True
@@ -55,8 +56,9 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6969,
         send_alert(joined_class=False, class_name=class_name)
     driver.quit()
 
-    sleep(runtime)
+    sleep(runtime) #Sleep for the duration of the class
     
+    #Connect again to exit class
     driver = webdriver.Chrome(options=chrome_options, executable_path= exec_path)
     try:
         l = driver.find_element_by_xpath(end_class_path)

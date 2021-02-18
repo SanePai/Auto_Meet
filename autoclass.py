@@ -17,6 +17,7 @@ def print_details(event):
         
 
 def auto_class():
+    last_class = False
     while True:
         currentTime = datetime.datetime.today()
         meetlinks()
@@ -71,11 +72,13 @@ def auto_class():
                     sleep(600)
                     sleep_time = (start_time - datetime.datetime.now())
             elif currentTime >= start_time:
+                if index == len(st)-1:
+                    last_class = True
                 link = st[index].split()[-1]
                 runtime = (end_time - currentTime).total_seconds()
                 if ".com" in link:
                     class_name = print_details(st[index].split())
-                    open_class(link, runtime,class_name)
+                    open_class(link, runtime,class_name, exit_browser=last_class)
                 else:
                     print("No meet link available for this event")
                     sleep(runtime)
