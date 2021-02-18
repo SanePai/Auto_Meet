@@ -132,3 +132,4 @@ dmypy.json
 *.pickle
 credentials.json
 meet.txt
+outdated/
