@@ -40,9 +40,11 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6969,
         if "Turn off microphone" in src:
             mic_off = False
             driver.refresh()
+            sleep(7)
         elif "Turn off camera" in src:
             cam_off = False
             driver.refresh()
+            sleep(7)
         if mic_off and cam_off:
             break
     
