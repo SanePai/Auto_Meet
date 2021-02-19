@@ -7,14 +7,16 @@ from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from send_alert import send_alert
+
 join_now_path = "//span[@class='NPEfkd RveJvd snByac']"
 end_class_path = "//span[@class='DPvwYc JnDFsc grFr5 FbBiwc']"
 record_join_now_path = "//div[@class='']"
-def open_class(link, runtime, class_name, record_class=False, debug_port = 6969, exec_path = "D:\Github\chromedriver_win32\chromedriver.exe", exit_browser = False):
+def open_class(link, runtime, class_name, record_class=False, debug_port = 6969, exec_path = "D:\Github\chromedriver_win32\chromedriver.exe", user_data_dir = "D:\Github\Auto_Meet\sel_profile", exit_browser = False):
     debug_address = "127.0.0.1:" + str(debug_port)
-    cmd = "chrome --remote-debugging-port=" + str(debug_port)
+    cmd = "chrome --remote-debugging-port=" + str(debug_port) + "user_data_dir=" + user_data_dir
     chrome_options = Options()
     chrome_options.add_experimental_option("debuggerAddress", debug_address)
+    chrome_options.add_argument("--mute-audio")
     try:
         print("Trying to connect to driver")
         driver = webdriver.Chrome(options=chrome_options, executable_path=exec_path)
@@ -30,24 +32,27 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6969,
             print("unknown error")
     driver.minimize_window()
     driver.get(link)
-    sleep(7)
+    sleep(10)
     mic_off = True
     cam_off = True
     src = driver.page_source
     sleep(2)
     #Mic and cam off check
     while True:
+        if "Turn on microphone" in src and "Turn on camera" in src:
+            mic_off = True
+            cam_off = True
+            break
         if "Turn off microphone" in src:
             mic_off = False
             driver.refresh()
             sleep(7)
-        elif "Turn off camera" in src:
+            src = driver.page_source
+        if "Turn off camera" in src:
             cam_off = False
             driver.refresh()
             sleep(7)
-        if mic_off and cam_off:
-            break
-    
+            src = driver.page_source
     #join_class
     try:
         j = driver.find_element_by_xpath(join_now_path)

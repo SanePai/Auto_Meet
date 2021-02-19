@@ -75,5 +75,3 @@ def meetlinks():
             except KeyError:
                 fh.write(f"{str(start)}\t{str(end)}\t{event['summary']}\t\tNo meet info\n")
     fh.close()
-
-# meetlinks()
