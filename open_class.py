@@ -92,11 +92,15 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
         driver.quit()
     elif exit_browser:
         try:
-            process.terminate()
+            driver.close()
+            driver.quit()
         except:
             try:
-                action = ActionChains(driver)
-                action.key_down(Keys.ALT).key_down(Keys.F4).key_up(Keys.F4).key_up(Keys.ALT).perform()
+                process.terminate()
             except:
-                print("Error\nCouldnt exit the browser")
-                send_alert(custom_msg="Error\nCouldnt exit the browser")
+                try:
+                    action = ActionChains(driver)
+                    action.key_down(Keys.ALT).key_down(Keys.F4).key_up(Keys.F4).key_up(Keys.ALT).perform()
+                except:
+                    print("Error\nCouldnt exit the browser")
+                    send_alert(custom_msg="Error\nCouldnt exit the browser")
