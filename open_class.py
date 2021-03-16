@@ -10,7 +10,7 @@ from send_alert import send_alert
 
 join_now_path = "//span[@class='NPEfkd RveJvd snByac']"
 end_class_path = "//span[@class='DPvwYc JnDFsc grFr5 FbBiwc']"
-record_join_now_path = "//div[@class='']"
+record_join_now_path = "//span[@class='RveJvd snByac']"
 def open_class(link, runtime, class_name, record_class=False, debug_port = 6942, exec_path = "D:\Github\chromedriver_win32\chromedriver.exe", user_data_dir = "D:\Github\Auto_Meet\sel_profile", exit_browser = False):
     if "https://" not in link:
         link = "https://" + link
@@ -33,7 +33,6 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
             print("Connected")
         else:
             print("unknown error")
-    driver.minimize_window()
     driver.get(link)
     sleep(10)
     mic_off = True
@@ -59,7 +58,7 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
         send_alert(joined_class=False, class_name=class_name)
     
     #Check for join in case of recording
-    '''
+
     src = driver.page_source
     if "This meeting is being recorded" in src:
         try:
@@ -67,7 +66,7 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
             r.click()
         except:
             send_alert(custom_msg = "Joined class but couldnt get past record screen")
-    '''
+
     driver.quit()
 
     sleep(runtime) #Sleep for the duration of the class

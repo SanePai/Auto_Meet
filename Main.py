@@ -12,12 +12,13 @@ def main():
         send_alert(custom_msg="Done for today\nSleeping till tomorrow")
         print(f'Sleeping for {(tom - now)}')
         m = (tom-now).total_seconds()
-        while m:
-            if m<600:
+        while m>=0:
+            if m <= 600:
                 sleep(m)
                 break
             sleep(600)
             m = (tom - datetime.datetime.now()).total_seconds()
+    main()
 
 if __name__ == "__main__":
     main()
