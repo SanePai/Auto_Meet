@@ -1,0 +1,16 @@
+{
+    "weekdays": 6, 
+    "elementPaths": {
+        "join_now_path": "//span[@class='NPEfkd RveJvd snByac']",
+        "end_class_path": "//span[@class='DPvwYc JnDFsc grFr5 FbBiwc']",
+        "record_join_now_path": "//span[@class='RveJvd snByac']"
+    },
+    "defaults": {
+        "defaultPort": 6942,
+        "seleniumExecutable": "D:\\Github\\chromedriver_win32\\chromedriver.exe",
+        "seleniumProfile": "D:\\Github\\Auto_Meet\\sel_profile",
+        "sleepUpdateTime": 600,
+        "muteAudio": true,
+        "minimizeWindowAfterJoin": true
+    }
+}

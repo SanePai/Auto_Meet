@@ -4,6 +4,11 @@ import datetime
 import os
 from open_class import open_class
 from send_alert import send_alert
+import json
+
+settings = json.load(open('settings.json'))
+sleep_update = settings['defaults']['sleepUpdateTime']
+
 
 def print_details(event):
     class_name = ""
@@ -39,10 +44,10 @@ def auto_class():
             print(f"First class in {sleep_time} seconds")
             m = sleep_time
             while m:
-                if m<600:
+                if m<sleep_update:
                     sleep(m)
                     break
-                sleep(600)
+                sleep(sleep_update)
                 m = (first_start - datetime.datetime.now()).total_seconds()
                 print(f'First class in {first_start - datetime.datetime.now()}')
             continue
@@ -66,10 +71,10 @@ def auto_class():
                 sleep_time = (start_time - currentTime)
                 while sleep_time.total_seconds():
                     print(f'Class not starting for {sleep_time}')
-                    if sleep_time.total_seconds() <= 600:
+                    if sleep_time.total_seconds() <= sleep_update:
                         sleep(sleep_time.total_seconds())
                         break
-                    sleep(600)
+                    sleep(sleep_update)
                     sleep_time = (start_time - datetime.datetime.now())
             elif currentTime >= start_time:
                 if index == len(st)-1:

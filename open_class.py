@@ -7,11 +7,21 @@ from time import sleep
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from send_alert import send_alert
+import json
 
-join_now_path = "//span[@class='NPEfkd RveJvd snByac']"
-end_class_path = "//span[@class='DPvwYc JnDFsc grFr5 FbBiwc']"
-record_join_now_path = "//span[@class='RveJvd snByac']"
-def open_class(link, runtime, class_name, record_class=False, debug_port = 6942, exec_path = "D:\Github\chromedriver_win32\chromedriver.exe", user_data_dir = "D:\Github\Auto_Meet\sel_profile", exit_browser = False):
+settings = json.load(open('settings.json'))
+join_now_path = settings['elementPaths']['join_now_path']
+end_class_path = settings['elementPaths']['end_class_path']
+record_join_now_path = settings['elementPaths']['record_join_now_path']
+exec_path = settings['defaults']['seleniumExecutable']
+user_data_dir = settings['defaults']['seleniumProfile']
+debug_port = settings['defaults']['defaultPort']
+minimize_after_join = settings['defaults']['minimizeWindowAfterJoin']
+mute = settings['defaults']['muteAudio']
+
+def open_class(link, runtime, class_name, record_class=False, 
+                debug_port = debug_port, exec_path = exec_path,
+                user_data_dir = user_data_dir, exit_browser = True):    
     if "https://" not in link:
         link = "https://" + link
     
@@ -19,7 +29,8 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
     cmd = "chrome --remote-debugging-port=" + str(debug_port) + " --user-data-dir=" + user_data_dir
     chrome_options = Options()
     chrome_options.add_experimental_option("debuggerAddress", debug_address)
-    chrome_options.add_argument("--mute-audio")
+    if mute:
+        chrome_options.add_argument("--mute-audio")
     try:
         print("Trying to connect to driver")
         driver = webdriver.Chrome(options=chrome_options, executable_path=exec_path)
@@ -34,6 +45,7 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
         else:
             print("unknown error")
     driver.get(link)
+    driver.maximize_window()
     sleep(10)
     mic_off = True
     cam_off = True
@@ -66,7 +78,8 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
             r.click()
         except:
             send_alert(custom_msg = "Joined class but couldnt get past record screen")
-
+    if minimize_after_join:
+        driver.minimize_window()
     driver.quit()
 
     sleep(runtime) #Sleep for the duration of the class
@@ -79,13 +92,19 @@ def open_class(link, runtime, class_name, record_class=False, debug_port = 6942,
     except:
         print("Couldnt connect to driver")
         send_alert(exit_class=False)
-    try:
-        l = driver.find_element_by_xpath(end_class_path)
-        l.click()
-        send_alert(exit_class=True, class_name=class_name)
-    except:
-        print("Error\nCouldnt find the exit button")
-        send_alert(exit_class=False, class_name=class_name)
+    #Check if the host ended the meeting before
+    src = driver.page_source
+    if "The meeting has ended" in src:
+        print("Meeting ended by host before end time")
+        send_alert(custom_msg="Meeting ended by host before end time")
+    else:
+        try:
+            l = driver.find_element_by_xpath(end_class_path)
+            l.click()
+            send_alert(exit_class=True, class_name=class_name)
+        except:
+            print("Error\nCouldnt find the exit button")
+            send_alert(exit_class=False, class_name=class_name)
     
 
     if not exit_browser:
