@@ -12,17 +12,17 @@ Steps:(1-6 are only for the first time)
 6. run "notify-run register" to create a channel for notifications. Scan the QR or go to the link in a browser on your phone(or any device) and subscribe for notifications.
 7. Navigate to the directory and run the Main.py file (python Main.py or python3 Main.py). First time run will open a oauth window in your browser.(Delete token.pickle if you wish to change the account in the future)
 
-Settings:
-weekdays: Weeks start on Monday by default. set to any number between 1 and 6
-elementPaths: element paths in the html source for google meet
-defaults:
-    defaultPort: default debugging port selenium. default=6942
-    seleniumExecutable: selenium driver path
-    seleniumProfile: selenium profile folder path
-    sleepUpdateTime: long sleep times are continually updated after a set duration instead of one long sleep.Low update time might affect performance. value is in seconds. default=600s (10 minutes)
-    muteAudio: mute the audio of the meet site. default=true 
-    minimizeWindowAfterJoin: minimize window after joining the class. the tab needs to be in focus to allow the mic and cam to be switched off automatically by the meet enchancement extension.
-
-Work in progress:
-    remove dependency on meet enhancement extension
-    record.py - record meetings (ideally using OBS).
+Settings:  
+weekdays: Weeks start on Monday by default. set to any number between 1 and 6  
+elementPaths: element paths in the html source for google meet  
+defaults:  
+    defaultPort: default debugging port selenium. default=6942  
+    seleniumExecutable: selenium driver path  
+    seleniumProfile: selenium profile folder path  
+    sleepUpdateTime: long sleep times are continually updated after a set duration instead of one long sleep.Low update time might affect performance. value is in seconds. default=600s (10 minutes)  
+    muteAudio: mute the audio of the meet site. default=true   
+    minimizeWindowAfterJoin: minimize window after joining the class. the tab needs to be in focus to allow the mic and cam to be switched off automatically by the meet enchancement extension.  
+   
+Work in progress:  
+    remove dependency on meet enhancement extension  
+    record.py - record meetings (ideally using OBS).  
