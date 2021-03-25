@@ -80,9 +80,9 @@ def open_class(link, runtime, class_name, record_class=False,
             if "Ask to join" not in src:
                 ask_to_join = False
                 send_alert(joined_class=True, class_name=class_name)
-            if count == 10 or "Return to home screen" in src:
+            if count == 10 or "You can't join this call" in src:
                 send_alert(joined_class=False,class_name=class_name)
-                send_alert(custom_msg="No one let in")
+                send_alert(custom_msg="Join request was not accepted")
     except:
         print("Error\nCouldnt find join button")
         send_alert(joined_class=False, class_name=class_name)
