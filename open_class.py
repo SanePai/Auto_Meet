@@ -52,25 +52,42 @@ def open_class(link, runtime, class_name, record_class=False,
     src = driver.page_source
     sleep(2)
     #Mic and cam off check
+    count = 0
     while True:
+        if count == 10:
+            send_alert(custom_msg= "Couldnt swtich off camera or mic")
+            break
         if "Turn on microphone" in src and "Turn on camera" in src:
             break
         else:
+            count += 1
             driver.refresh()
             sleep(3)
             src = driver.page_source
+    ask_to_join = False
+    if "Ask to join" in src:
+        ask_to_join = True
 
     #join_class
     try:
         j = driver.find_element_by_xpath(join_now_path)
         j.click()
-        send_alert(joined_class=True, class_name=class_name)
+        if not ask_to_join:
+            send_alert(joined_class=True, class_name=class_name)
+        while ask_to_join:
+            sleep(30) #wait 30 seconds for someone to accept (10*30 seconds = 5 minutes)
+            src = driver.page_source
+            if "Ask to join" not in src:
+                ask_to_join = False
+                send_alert(joined_class=True, class_name=class_name)
+            if count == 10 or "Return to home screen" in src:
+                send_alert(joined_class=False,class_name=class_name)
+                send_alert(custom_msg="No one let in")
     except:
         print("Error\nCouldnt find join button")
         send_alert(joined_class=False, class_name=class_name)
     
-    #Check for join in case of recording
-
+    #Check for additional join confirmation in case of recording
     src = driver.page_source
     if "This meeting is being recorded" in src:
         try:

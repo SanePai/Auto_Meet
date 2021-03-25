@@ -20,6 +20,8 @@ def main():
         tom = datetime.datetime(now.year, now.month, now.day+gap, 8, 00, 00)
         print("Done for today")
         send_alert(custom_msg="Done for today\nSleeping till tomorrow")
+        with open('meet.txt', 'w') as fh: #Delete all entries in the meet links file
+            pass
         print(f'Sleeping for {(tom - now)}')
         m = (tom-now).total_seconds()
         while m>=0:
