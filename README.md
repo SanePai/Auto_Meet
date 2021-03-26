@@ -8,7 +8,7 @@ Meet enchancement extension is needed to turn off mic and camera.(https://www.me
 Steps:(1-6 are only for the first time)
 1. Enable Calendar API and add the credentials.json file into the directory
 2. Make sure that the auto mic and cam off options are enabled in the meet enchancement extension
-3. run "pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib notify-run" without the quotation marks.
+3. run "pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib notify-run selenium" without the quotation marks.
 4. add chrome to PATH (google for steps if needed).
 5. run "chorme --remote-debugging-port=<port number> --user-data-dir=<user_data_dir_path> and sign in using the google account that is used to join meetings. port number is 6942 by default. If you change that make sure to change it in the settings.json as well. Create a new folder somewhere in your system. That folder path will be user_data_dir_path.
 6. run "notify-run register" to create a channel for notifications. Scan the QR or go to the link in a browser on your phone(or any device) and subscribe for notifications.
