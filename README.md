@@ -1,5 +1,5 @@
 Pulls all meetings from google calendar  
-Joins and exits them at specific times
+Joins and exits them at specific times  
 Meet link must be in the location field of the event  
 
 
