@@ -8,6 +8,7 @@ import json
 
 settings = json.load(open('settings.json'))
 sleep_update = settings['defaults']['sleepUpdateTime']
+notifs = settings['notifs']
 
 
 def print_details(event):
@@ -89,7 +90,8 @@ def auto_class():
                     sleep(runtime)
             else:
                 print("Unknown Error")
-                send_alert(custom_msg="Some unknown error has occured")
+                if notifs:
+                    send_alert(custom_msg="Some unknown error has occured")
             if noClassLeft: break
     if noClassLeft:
         return noClassLeft

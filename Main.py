@@ -3,10 +3,12 @@ import datetime
 from time import sleep
 from send_alert import send_alert
 import json
+
 def main():
     settings = json.load(open('settings.json'))
     weekdays = settings['weekdays']
     sleep_update = settings['defaults']['sleepUpdateTime']
+    notifs = settings['notifs']
     weekend_gap = 8 - weekdays
     end_of_week = weekdays - 1
     now = datetime.datetime.now()
@@ -19,7 +21,8 @@ def main():
             gap = 1 
         tom = datetime.datetime(now.year, now.month, now.day+gap, 8, 00, 00)
         print("Done for today")
-        send_alert(custom_msg="Done for today\nSleeping till tomorrow")
+        if notifs:
+            send_alert(custom_msg="Done for today\nSleeping till tomorrow")
         with open('meet.txt', 'w') as fh: #Delete all entries in the meet links file
             pass
         print(f'Sleeping for {(tom - now)}')

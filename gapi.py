@@ -11,13 +11,7 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
 def meetlinks():
-    """Shows basic usage of the Google Calendar API.
-    Prints the start and name of the next 10 events on the user's calendar.
-    """
     creds = None
-    # The file token.pickle stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
             creds = pickle.load(token)
@@ -37,14 +31,13 @@ def meetlinks():
 
     # Call the Calendar API
     now_ = datetime.datetime.utcnow()
-    now = now_.isoformat() + 'Z' # 'Z' indicates UTC time
+    now = now_.isoformat() + 'Z' # 'Z' indicates UTC time (7am IST to 9om IST => 2 am to 13pm UTC)
     day_start = datetime.datetime(now_.year, now_.month, now_.day, 2, 0, 0).isoformat() + 'Z'
     day_end = datetime.datetime(now_.year, now_.month, now_.day, 13, 0, 0).isoformat() + 'Z'
    
     events_result = service.events().list(calendarId='primary', timeMin = day_start, timeMax = day_end, singleEvents=True,
                                         orderBy='startTime', maxResults = 10).execute()
     events = events_result.get('items', [])
-    # print(events[-1]['start'])
     print("==============================================")
     if not events:
         print('No upcoming events found.')
@@ -60,7 +53,6 @@ def meetlinks():
             print(start_time, end_time, event['summary'],"\t\t", event['location'])
         except KeyError:
             print(start_time,end_time, event['summary'], "\t\t", "no meet link")
-        # print(start, event['summary'])
     print(("=============================================="))
     with open('meet.txt', 'w') as fh:
         for event in events:

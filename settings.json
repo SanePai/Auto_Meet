@@ -12,5 +12,6 @@
         "sleepUpdateTime": 600,
         "muteAudio": true,
         "minimizeWindowAfterJoin": true
-    }
+    },
+    "notifs": true
 }
