@@ -1,5 +1,7 @@
-Pulls all meetings from google calendar
+Pulls all meetings from google calendar  
 Joins and exits them at specific times
+Meet link must be in the location field of the event  
+
 
 Meet enchancement extension is needed to turn off mic and camera.(https://www.meetenhancementsuite.com/)
 
