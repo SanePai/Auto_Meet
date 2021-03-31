@@ -16,10 +16,11 @@ def main():
     if noClassLeft:
         now = datetime.datetime.now()
         if now.weekday() == end_of_week: #Skip weekends
-            gap = weekend_gap
+            # gap = weekend_gap
+            gap = datetime.timedelta(weekend_gap)
         else:
-            gap = 1 
-        tom = datetime.datetime(now.year, now.month, now.day+gap, 8, 00, 00)
+            gap = datetime.timedelta(1) 
+        tom = datetime.datetime(now.year, now.month, now.day, 8, 00, 00) + gap
         print("Done for today")
         if notifs:
             send_alert(custom_msg="Done for today\nSleeping till tomorrow")
